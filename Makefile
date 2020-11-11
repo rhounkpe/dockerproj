@@ -1,8 +1,8 @@
 setup:
-	python3 -m venv ~/.dockerproj
+	python3 -m venv ~/.udacity-cloud-devops-nd-aws-docker-project
 
 install:
-	pip install --upgrade pip &&\
+	pip install --upgrade pip && \
 		pip install -r requirements.txt
 
 test:
