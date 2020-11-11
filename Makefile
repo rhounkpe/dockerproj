@@ -11,7 +11,7 @@ test:
 
 lint:
 	hadolint Dockerfile
-	pylint --disable-R,C,W1203 app.py
+	pylint --disable=R,C,W1203 app.py
 
 validate-circleci:
 	# See https://circleci.com/docs/2.0/local-cli/#processing-a-config
