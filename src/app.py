@@ -7,3 +7,5 @@ def hello():
     
 if __name__ == '__main__':
     hello()
+# Make fail lint
+# var =
