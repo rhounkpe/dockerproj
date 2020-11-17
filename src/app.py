@@ -1,11 +1,9 @@
-#!/usr/bin/env python
-import click
+from flask import Flask
+app = Flask(__name__)
 
-@click.command()
-def hello():
-    click.echo('Hello world!')
-    
-if __name__ == '__main__':
-    hello()
+@app.route('/')
+def hello_world():
+    return 'Hello, World!'
+
 # Make fail lint. Comment the line bello after test.
 # var =

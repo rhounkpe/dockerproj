@@ -17,7 +17,7 @@ docker container rm ${APP_NAME} || true
 docker run -d \
     --log-driver json-file \
     --log-opt mode=non-blocking \
-    --publish 8080:80 \
+    --publish 5000:80 \
     --network ${APP_NETWORK} \
     --name ${APP_NAME} \
     ${IMAGE_NAME}:${IMAGE_TAG}

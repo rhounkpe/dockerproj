@@ -19,7 +19,7 @@ install:
 
 start-api:
 	#sets PYTHONPATH to directory above
-	cd src && python app.py
+	cd src && PYTHONPATH=".." python app.py
 
 test:
 	#python -m pytest -vv --cov=myrepolib tests/*.py
