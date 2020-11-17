@@ -1,4 +1,4 @@
-FROM python:3.7.9-stretch
+FROM python:3.7.3-stretch
 
 # Working directory
 WORKDIR /app
@@ -19,4 +19,4 @@ RUN pip install --upgrade pip && \
 EXPOSE 80
 
 # Run app.py at container launch
-CMD [ "python", "web.py" ]
+CMD [ "python", "app.py" ]
