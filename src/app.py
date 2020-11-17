@@ -8,4 +8,4 @@ def hello():
 if __name__ == '__main__':
     hello()
 # Make fail lint. Comment the line bello after test.
-var =
+# var =
