@@ -20,3 +20,4 @@ kubectl port-forward ${APP_LABEL} ${APP_PORT}:${APP_PORT}
 
 
 
+
