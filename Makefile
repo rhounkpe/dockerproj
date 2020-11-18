@@ -10,7 +10,8 @@ env:
 
 lint:
 	hadolint Dockerfile
-	pylint --disable=R,C,W1203 ./src/app.py
+	# hadolint *.sh
+	pylint --disable=R,C,W1203 ./src/**.py
 
 
 install:
