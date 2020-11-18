@@ -11,9 +11,6 @@ pipeline {
                     image 'hadolint/hadolint:latest-debian'
                 }
             }
-	
-	# hadolint *.sh
-
             steps {
                 echo 'Linting Dockerfile...'
                 // sh 'make lint'
