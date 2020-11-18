@@ -7,3 +7,6 @@ def hello_world():
 
 # Make fail lint. Comment the line bello after test.
 # var =
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=8080, debug=True)
