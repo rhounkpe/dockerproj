@@ -13,7 +13,7 @@ pipeline {
             }
             steps {
                 echo 'Linting Dockerfile...'
-                sh 'make lint'
+                // sh 'make lint'
             }
 
         }
@@ -21,7 +21,7 @@ pipeline {
             steps {
                 echo 'Building...'
         
-                sh 'make install'
+                // sh 'make install'
             }
         }
         stage('Test') {
