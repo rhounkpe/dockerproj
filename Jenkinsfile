@@ -11,11 +11,14 @@ pipeline {
                     image 'hadolint/hadolint:latest-debian'
                 }
             }
+	
+	# hadolint *.sh
 
             steps {
                 echo 'Linting Dockerfile...'
                 // sh 'make lint'
-                sh 'hadolint dockerfiles/* | tee -a hadolint_lint.txt'
+                // sh 'pylint --disable=R,C,W1203 ./src/**.py'
+                sh 'hadolint Dockerfile | tee -a hadolint_lint.txt'
             }
             post {
                 always {
