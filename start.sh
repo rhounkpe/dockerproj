@@ -4,6 +4,7 @@ IMAGE_NAME=rhounkpe/cloud-devops-nd-capstone
 IMAGE_TAG=1.0.0
 APP_NAME=cloud-devops-nd-capstone
 APP_NETWORK=devops-net
+APP_PORT=5000:5000
 
 # Build image
 docker build -t  ${IMAGE_NAME}:${IMAGE_TAG} .
@@ -17,7 +18,7 @@ docker container rm ${APP_NAME} || true
 docker run -d \
     --log-driver json-file \
     --log-opt mode=non-blocking \
-    --publish 5000:80 \
+    --publish  ${APP_PORT} \
     --network ${APP_NETWORK} \
     --name ${APP_NAME} \
     ${IMAGE_NAME}:${IMAGE_TAG}
