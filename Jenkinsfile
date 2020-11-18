@@ -8,6 +8,8 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building...'
+                sh 'make lint'
+                sh 'make install'
             }
         }
         stage('Test') {
