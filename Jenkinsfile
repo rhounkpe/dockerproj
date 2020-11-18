@@ -5,10 +5,22 @@ pipeline {
         }
     }
     stages {
+        stage('Lint') {
+            agent {
+                docker {
+                    image 'hadolint/hadolint:latest-debian'
+                }
+            }
+            steps {
+                echo 'Linting Dockerfile...'
+                sh 'make lint'
+            }
+
+        }
         stage('Build') {
             steps {
                 echo 'Building...'
-                sh 'make lint'
+        
                 sh 'make install'
             }
         }
