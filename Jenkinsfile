@@ -11,11 +11,17 @@ pipeline {
                     image 'hadolint/hadolint:latest-debian'
                 }
             }
+
             steps {
                 echo 'Linting Dockerfile...'
                 // sh 'make lint'
+                sh 'hadolint dockerfiles/* | tee -a hadolint_lint.txt'
             }
-
+            post {
+                always {
+                    archiveArtifacts 'hadolint_lint.txt'
+                }
+            }
         }
         stage('Build') {
             steps {
