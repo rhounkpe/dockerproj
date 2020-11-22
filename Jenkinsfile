@@ -5,8 +5,13 @@ pipeline {
         }
     }
     triggers { cron('*****')}
-    options { timeout(time: 10)}
+    options { timeout(time: 5)}
     stages {
+        stage("Checkout") {
+            steps {
+                git url: 'https://github.com/rhounkpe/udacity-cloud-devops-nd-aws-docker-project.git'
+            }
+        }
         /*
         stage('Lint') {
             agent {
