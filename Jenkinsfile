@@ -4,6 +4,8 @@ pipeline {
             image 'python:3.7.3-stretch'
         }
     }
+    triggers { cron('*****')}
+    options { timeout(time: 10)}
     stages {
         /*
         stage('Lint') {
