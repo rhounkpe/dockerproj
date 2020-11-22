@@ -5,6 +5,7 @@ pipeline {
         }
     }
     stages {
+        /*
         stage('Lint') {
             agent {
                 docker {
@@ -22,7 +23,7 @@ pipeline {
                     archiveArtifacts 'hadolint_lint.txt'
                 }
             }
-        }
+        } */
         stage('Build') {
             steps {
                 echo 'Building...'
