@@ -1,0 +1,10 @@
+Description: >
+    Rufin Hounkpe / Udacity Cloud DevOps Nano Degree Capstone cs_project: December 2020
+    This template deploys a VPC
+
+Resources:
+    VPC:
+        Type: AWS::EC2::VPC
+        Properties:
+            CidrBlock: 10.0.0.0/16
+            EnableDnsHostnames: true
