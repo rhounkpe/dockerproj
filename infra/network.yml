@@ -1,10 +1,42 @@
 Description: >
-    Rufin Hounkpe / Udacity Cloud DevOps Nano Degree Capstone cs_project: December 2020
-    This template deploys a VPC
+    Rufin Hounkpe / Udacity Cloud DevOps Engineer Nanodegree Capstone Project: December 2020
 
+Parameters:
+    EnvironmentName:
+        Description: An environment name that will be prefixed to resource names
+        Type: String
+
+    VpcCIDR:
+        Description: Please enter the IP range (CIDR notation) for this VPC
+        Type: String
+        Default: 10.0.0.0/16
+    
+    PublicSubnet1CIDR:
+        Description: Please enter the IP range (CIDR notation) for the public subnet in the first Availability Zone
+        Type: String
+        Default: 10.0.0.0/24
+    
+    PublicSubnet2CIDR:
+        Description: Please enter the IP range (CIDR notation) for the public subnet in the second Availability Zone
+        Type: String
+        Default: 10.0.0.0/24
+    
+    PrivateSubnet1CIDR:
+        Description: Please enter the IP range (CIDR notation) for the private subnet in the first Availability Zone
+        Type: String
+        Default: 10.0.0.0/24
+
+    PrivateSubnet2CIDR:
+        Description: Please enter the IP range (CIDR notation) for the private subnet in the second Availability Zone
+        Type: String
+        Default: 10.0.0.0/24
+    
 Resources:
     VPC:
         Type: AWS::EC2::VPC
         Properties:
-            CidrBlock: 10.0.0.0/16
+            CidrBlock: !Ref VpcCIDR
             EnableDnsHostnames: true
+            Tags:
+                - Key: Name
+                  Value: !Ref EnvironmentName
