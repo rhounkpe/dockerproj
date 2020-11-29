@@ -1,0 +1,40 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >
+    Rufin Hounkpe / Udacity Cloud DevOps Engineer Nanodegree Capstone project: September 2020
+Resources:
+    JenkinsServer:
+        Type: AWS::EC2::Instance
+        Properties:
+            ImageId: ami-0a634ae95e11c6f91
+            InstanceType: t2.micro
+            UserData:
+                Fn::Base64: !Sub |
+                    #!/bin/bash
+                    # Install Docker
+                    apt-get update
+                    apt-get install -y apt-transport-https ca-certificates curl software-properties-common
+                    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+                    add-apt-repository \
+                    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+                    $(lsb_release -cs) \
+                    stable"
+                    apt-get update
+                    apt-get install -y docker-ce
+                    usermod -aG docker ubuntu
+                    docker run -p 8080:8080 tomcat:8.0
+
+                    # Install Jenkins
+                    # sudo apt-get update -y
+                    # sudo apt install -y default-jdk
+                    # wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -
+                    # sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+                    # sudo apt-get update
+                    # sudo apt-get install -y jenkins
+                    # sudo systemctl start jenkins
+                    # sudo systemctl enable jenkins
+                    # sudo systemctl status jenkins
+    
+    CapstoneBucket:
+        Type: AWS::S3::Bucket
+        Properties:
+            AccessControl: PublicRead
