@@ -8,7 +8,7 @@
   
   tasks:
     - name: Security Group
-      devops_group:
+      ec2_group:
         name: devops_group
         description: Rules allowing traffic on port 22 and 80
         region: "{{ aws_region }}"

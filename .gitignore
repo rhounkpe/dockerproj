@@ -127,3 +127,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+raspberrypi_2015_ubuntu_server.pem
