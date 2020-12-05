@@ -40,17 +40,3 @@
         instance_tags:
           Name: Devops
       register: devopsEC2
-  
-    
-    - name: Add all instances public IPs to host group
-      add_host: hostname={{ item.public_ip }} groups=devopshosts
-      loop: "{{ devopsEC2.instances }}"
-    
-    - hosts: devopshosts
-      name: configuration play
-      user: ec2-user
-      gather_facts: true
-
-      tasks:
-        - name: Check NTP service
-          service: name=ntpd state=started
