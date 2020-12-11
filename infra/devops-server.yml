@@ -1,40 +1,87 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Description: >
     Rufin Hounkpe / Udacity Cloud DevOps Engineer Nanodegree Capstone project: September 2020
+
+Parameters:
+    EnvironmentName:
+        Description: An environment name that will be prefixed to resource names
+        Type: String
 Resources:
+    DevopsServerSecGroup:
+        Type: AWS::EC2::SecurityGroup
+        Properties:
+            GroupName: "Devops Servers Security Group"
+            GroupDescription: Allow http to our host on 8080 and 8081 and Enable SSH access via port 22
+            VpcId:
+                Fn::ImportValue:
+                    !Sub "${EnvironmentName}-VPCID"
+            
+            # An inbound rule permits instances to receive traffic from the specified IPv4 or IPv6 CIDR address ranges,
+            # or from the instances associated with the specified destination security groups.
+            SecurityGroupIngress:
+            # Allows inbound HTTP access from any IPv4 address on port 8080 and 8081
+            - IpProtocol: tcp
+              FromPort: 8080
+              ToPort: 8081
+              # The IPv4 address range, in CIDR format. 
+              CidrIp: 0.0.0.0/0
+            # The public IPv4 address of your computer, or a range of IP addresses (in CIDR block notation) in your local network.
+            - IpProtocol: tcp
+              FromPort: '22'
+              ToPort: '22'
+              CidrIp: 0.0.0.0/0
+            
+            # An outbound rule permits instances to send traffic to the specified IPv4 or IPv6 CIDR address ranges,
+            # or to the instances associated with the specified destination security groups.
+            SecurityGroupEgress:
+            - IpProtocol: tcp
+              FromPort: 0
+              ToPort: 65535
+              CidrIp: 0.0.0.0/0
+
     JenkinsServer:
         Type: AWS::EC2::Instance
         Properties:
-            ImageId: ami-0a634ae95e11c6f91
+            ImageId: "ami-0d3f551818b21ed81"
             InstanceType: t2.micro
+            BlockDeviceMappings:
+            - DeviceName: "/dev/sdk"
+              Ebs:
+                VolumeSize: '20'
+            DisableApiTermination: false
+
+            NetworkInterfaces: 
+                - AssociatePublicIpAddress: "true"
+                  DeviceIndex: "0"
+                  GroupSet: 
+                    - Ref: "DevopsServerSecGroup"
+                  SubnetId: 
+                    # Ref: "PublicSubnet"
+                    Fn::ImportValue: !Sub "${EnvironmentName}-PUB1-SN"
+
             UserData:
                 Fn::Base64: !Sub |
                     #!/bin/bash
                     # Install Docker
-                    apt-get update
+                    apt-get update -y
                     apt-get install -y apt-transport-https ca-certificates curl software-properties-common
                     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
                     add-apt-repository \
                     "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
                     $(lsb_release -cs) \
                     stable"
-                    apt-get update
+                    apt-get update -y
                     apt-get install -y docker-ce
                     usermod -aG docker ubuntu
-                    docker run -p 8080:8080 tomcat:8.0
+                    docker run -p 8081:8080 tomcat:8.0
 
                     # Install Jenkins
-                    # sudo apt-get update -y
-                    # sudo apt install -y default-jdk
-                    # wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -
-                    # sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
-                    # sudo apt-get update
-                    # sudo apt-get install -y jenkins
-                    # sudo systemctl start jenkins
-                    # sudo systemctl enable jenkins
-                    # sudo systemctl status jenkins
-    
-    CapstoneBucket:
-        Type: AWS::S3::Bucket
-        Properties:
-            AccessControl: PublicRead
+                    apt-get update -y
+                    apt install -y openjdk-11-jre-headless
+                    wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -
+                    sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+                    apt-get update -y
+                    apt-get install -y jenkins
+                    systemctl start jenkins
+                    systemctl enable jenkins
+                    systemctl status jenkins
